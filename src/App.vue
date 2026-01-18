@@ -1,17 +1,16 @@
 <script setup lang="ts">
-a = 10
-b = 1
-c = 22
-d = 222
-c = 333
+import { ref } from 'vue'
+
+const aa = ref()
 </script>
 
 <template>
   <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <el-input-tag
+    v-model="aa"
+    placeholder="Please input"
+    aria-label="Please click the Enter key after input"
+  />
 </template>
 
 <style scoped></style>
