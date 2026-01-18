@@ -23,8 +23,11 @@
     ]
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
+    "@tailwindcss/vite": "^4.1.18",
     "element-plus": "^2.13.1",
     "pinia": "^3.0.4",
+    "tailwindcss": "^4.1.18",
     "vue": "^3.5.26",
     "vue-router": "^4.6.4"
   },
@@ -44,6 +47,7 @@
     "lint-staged": "^16.2.7",
     "npm-run-all2": "^8.0.4",
     "prettier": "3.7.4",
+    "sass": "^1.97.2",
     "typescript": "~5.9.3",
     "unplugin-auto-import": "^21.0.0",
     "unplugin-vue-components": "^31.0.0",

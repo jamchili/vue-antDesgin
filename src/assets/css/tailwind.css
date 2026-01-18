@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import 'element-plus/theme-chalk/dark/css-vars.css';
+
+
+
+/* === 第一部分：在 @theme 块内声明所有设计变量 === */
+@theme {
+  /* 这里只定义变量名和它们的默认（亮色）值 */
+  --color-nav-bg: #ffffff;
+  --color-color: #141414;
+}
+
+/* === 第二部分：在 @theme 块外，使用CSS规则覆盖变量以实现主题切换 === */
+/* 2.1 暗色模式（通过 .dark 类手动切换） */
+:root.dark,
+:root[data-theme="dark"] {
+  --color-primary-80: #3964fe;
+  --color-nav-bg: #141414;
+  --color-color: #ffffff;
+}
