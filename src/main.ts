@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 import '@/assets/css/tailwind.css'
 import elementIcons from './plugins/element-icons'
+import 'virtual:svg-icons-register'
 
 const app = createApp(App)
 
