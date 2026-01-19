@@ -1,35 +1,57 @@
 <script setup lang="ts">
-const tableData = [
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  },
-  {
-    date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
+import { loginApi } from '@/api/user'
+import type { FormInstance, FormRules } from 'element-plus'
+import { ref } from 'vue'
+
+//组件实例
+const ruleFormRef = ref<FormInstance>()
+
+const formData = ref({
+  username: 'admin',
+  password: 'admin123',
+  remember: true
+})
+
+const login = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  const ok = await formEl.validate()
+
+  if (ok) {
+    const res = await loginApi({
+      username: formData.value.username,
+      password: formData.value.password
+    })
+    console.log('res', res.data.token)
   }
-]
+}
+
+const rules: FormRules = {
+  username: [{ required: true }],
+  password: [{ required: true }]
+}
 </script>
 
 <template>
-  <div>234</div>
-  <el-button type="primary">123</el-button>
-  <el-table :data="tableData">
-    <el-table-column prop="date" label="Date" />
-    <el-table-column prop="name" label="Name" />
-    <el-table-column prop="address" label="Address" />
-  </el-table>
+  <div class="w-full h-[100vh] grid place-items-center">
+    <div>
+      <el-form ref="ruleFormRef" :rules="rules" :model="formData">
+        <el-form-item label="账号" prop="username">
+          <el-input v-model="formData.username" />
+        </el-form-item>
+
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="formData.password" />
+        </el-form-item>
+
+        <el-form-item>
+          <el-checkbox v-model="formData.remember">记住我</el-checkbox>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button @click="login(ruleFormRef)" class="w-full" type="primary">登录</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+  </div>
 </template>
 <style lang="scss" scoped></style>

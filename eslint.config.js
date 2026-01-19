@@ -1,39 +1,24 @@
-// eslint.config.js
-import { globalIgnores } from 'eslint/config'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
-import pluginVue from 'eslint-plugin-vue'
-import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
+/* eslint-env node */
+require('@rushstack/eslint-patch/modern-module-resolution')
 
-export default defineConfigWithVueTs(
-  {
-    name: 'app/files-to-lint',
-    files: ['**/*.{vue,ts,mts,tsx}'],
-    rules: {
-      'prettier/prettier': [
-        'warn',
-        {
-          singleQuote: true,
-          semi: false,
-          printWidth: 80,
-          trailingComma: 'none',
-          endOfLine: 'auto'
-        }
-      ],
-      'vue/multi-word-component-names': [
-        'warn',
-        {
-          ignores: ['index']
-        }
-      ],
-      'vue/no-setup-props-destructure': ['off'],
-      'no-undef': 'error'
-    }
+module.exports = {
+  root: true,
+  extends: [
+    'plugin:vue/vue3-essential',
+    'eslint:recommended',
+    '@vue/eslint-config-typescript',
+    '@vue/eslint-config-prettier/skip-formatting'
+  ],
+  parserOptions: {
+    ecmaVersion: 'latest'
   },
-
-  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
-
-  ...pluginVue.configs['flat/essential'],
-  vueTsConfigs.recommended,
-
-  skipFormatting
-)
+  //配置白名单忽略index文件
+  rules: {
+    'vue/multi-word-component-names': [
+      'error',
+      {
+        ignores: ['index']
+      }
+    ]
+  }
+}
