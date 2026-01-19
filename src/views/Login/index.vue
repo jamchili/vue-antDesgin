@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { loginApi } from '@/api/user'
+import { useUserStore } from '@/stores'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 //组件实例
 const ruleFormRef = ref<FormInstance>()
 
@@ -12,16 +14,17 @@ const formData = ref({
   remember: true
 })
 
+const userStore = useUserStore()
+
 const login = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   const ok = await formEl.validate()
 
   if (ok) {
-    const res = await loginApi({
-      username: formData.value.username,
-      password: formData.value.password
-    })
-    console.log('res', res.data.token)
+    const { remember, ...reset } = formData.value
+    await userStore.setUserInfo(reset)
+    router.push('/')
+    console.log('我触发了')
   }
 }
 

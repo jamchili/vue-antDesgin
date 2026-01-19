@@ -8,7 +8,7 @@ const siderbarStore = useSiderbarStore()
 
 <template>
   <!-- 顶部nav -->
-  <div class="flex items-center h-12">
+  <div class="flex items-center h-12 w-full">
     <div class="flex-1 flex items-center gap-4">
       <CpIcon
         @click="siderbarStore.changeShowSiderbar"
@@ -23,7 +23,7 @@ const siderbarStore = useSiderbarStore()
         </el-breadcrumb>
       </div>
     </div>
-    <div>112</div>
+    <div>promotion managementpromotion</div>
   </div>
   <!-- tag栏 -->
 </template>
