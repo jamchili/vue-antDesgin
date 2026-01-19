@@ -1,10 +1,7 @@
 <script setup lang="ts">
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
+import { useSiderbarStore } from '@/stores'
+
+const siderbarStore = useSiderbarStore()
 </script>
 
 <template>
@@ -16,15 +13,15 @@ const handleClose = (key: string, keyPath: string[]) => {
           src="https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png"
           alt=""
         />
-        <h2 class="text-sm">Vue Element Admin</h2>
+        <h2 v-show="siderbarStore.isShowSiderbar" class="text-sm">Vue Element Admin</h2>
       </a>
     </div>
     <el-scrollbar>
       <el-menu
         default-active="2"
         class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose"
+        :collapse="!siderbarStore.isShowSiderbar"
+        :collapse-transition="siderbarStore.isShowSiderbar"
       >
         <el-sub-menu index="1">
           <template #title>
@@ -59,4 +56,4 @@ const handleClose = (key: string, keyPath: string[]) => {
     >
   </div>
 </template>
-<style lang="scss" scoped></style>
+<style scoped></style>
