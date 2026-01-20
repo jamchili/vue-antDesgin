@@ -1,7 +1,20 @@
 <script setup lang="ts">
+import { parkUserRouterApi } from '@/api/user'
 import { useSiderbarStore } from '@/stores'
+import { onMounted, ref } from 'vue'
 
 const siderbarStore = useSiderbarStore()
+
+const menuList = ref()
+
+const getMenuList = async () => {
+  const res = await parkUserRouterApi()
+  menuList.value = res.data
+}
+
+onMounted(() => {
+  getMenuList()
+})
 </script>
 
 <template>
@@ -18,42 +31,33 @@ const siderbarStore = useSiderbarStore()
     </div>
     <el-scrollbar>
       <el-menu
-        default-active="2"
         class="el-menu-vertical-demo"
         :collapse="!siderbarStore.isShowSiderbar"
-        :collapse-transition="siderbarStore.isShowSiderbar"
+        :router="true"
       >
-        <el-sub-menu index="1">
-          <template #title>
-            <el-icon><location /></el-icon>
-            <span>Navigator One</span>
-          </template>
-          <el-menu-item-group title="Group One">
-            <el-menu-item index="1-1">item one</el-menu-item>
-            <el-menu-item index="1-2">item two</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="Group Two">
-            <el-menu-item index="1-3">item three</el-menu-item>
-          </el-menu-item-group>
-          <el-sub-menu index="1-4">
-            <template #title>item four</template>
-            <el-menu-item index="1-4-1">item one</el-menu-item>
+        <template v-for="(item, index) in menuList" :key="index">
+          <el-sub-menu :index="item.component" v-if="item.children && item.children.length > 0">
+            <template #title>
+              <el-icon> <img :src="item.icon" alt="" /> </el-icon>
+              <span>{{ item.title }}</span>
+            </template>
+
+            <el-menu-item :index="v.component" v-for="(v, u) in item.children" :key="u">
+              {{ v.title }}
+            </el-menu-item>
           </el-sub-menu>
-        </el-sub-menu>
-        <el-menu-item index="2">
-          <el-icon><icon-menu /></el-icon>
-          <span>Navigator Two</span>
-        </el-menu-item>
-        <el-menu-item index="3" disabled>
-          <el-icon><document /></el-icon>
-          <span>Navigator Three</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <el-icon><setting /></el-icon>
-          <span>Navigator Four</span>
-        </el-menu-item>
-      </el-menu></el-scrollbar
-    >
+
+          <el-menu-item :index="item.component" v-else>
+            <el-icon> <img :src="item.icon" alt="" /> </el-icon>
+            <span>{{ item.title }}</span>
+          </el-menu-item>
+        </template>
+      </el-menu>
+    </el-scrollbar>
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.el-menu {
+  border: 0 !important;
+}
+</style>

@@ -33,7 +33,7 @@ instance.interceptors.response.use(
   }
 )
 
-function request<T>(url: string, method: Method, data?: object) {
+function request<T>(url: string, method: Method = 'GET', data?: object) {
   return instance<any, ApiRes<T>>({
     url: url,
     method: method,

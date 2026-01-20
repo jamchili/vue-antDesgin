@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ArrowRight } from '@element-plus/icons-vue'
-
 import { useSiderbarStore } from '@/stores'
+import { useRoute, useRouter } from 'vue-router'
+import Breadcrumb from './breadcrumb.vue'
 
 const siderbarStore = useSiderbarStore()
+
 </script>
 
 <template>
@@ -15,13 +16,7 @@ const siderbarStore = useSiderbarStore()
         class="pl-2 text-3xl"
         name="hamburger"
       ></CpIcon>
-      <div>
-        <el-breadcrumb :separator-icon="ArrowRight">
-          <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-          <el-breadcrumb-item>promotion management</el-breadcrumb-item>
-          <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-        </el-breadcrumb>
-      </div>
+      <div><Breadcrumb></Breadcrumb></div>
     </div>
     <div>promotion managementpromotion</div>
   </div>
