@@ -8,6 +8,7 @@
   /* 这里只定义变量名和它们的默认（亮色）值 */
   --color-nav-bg: #ffffff;
   --color-color: #141414;
+  --color-bt: #ebeef5;
 }
 
 /* === 第二部分：在 @theme 块外，使用CSS规则覆盖变量以实现主题切换 === */
@@ -17,4 +18,5 @@
   --color-primary-80: #3964fe;
   --color-nav-bg: #141414;
   --color-color: #ffffff;
+  --color-bt: #ebeef5;
 }

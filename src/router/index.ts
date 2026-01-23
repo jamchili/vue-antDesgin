@@ -22,20 +22,33 @@ const router = createRouter({
     }]
   },
   {
-    path: '/park',
+    path: '/car',
     component: Layout,
-    meta: { title: '园区管理', icon: 'el-icon-office-building' },
+    meta: { title: '行车管理', icon: 'el-icon-guide' },
     children: [{
-      path: 'building',
-      meta: { title: '楼宇管理' },
-      component: () => import('@/views/Park/Building/index.vue')
+      path: 'area',
+      component: () => import('@/views/Car/CarArea/index.vue'),
+      meta: { title: '区域管理' }
+    }, {
+      path: 'monthCard',
+      component: () => import('@/views/Car/CarCard/index.vue'),
+      meta: { title: '月卡管理' }
+    }, {
+      path: 'pay',
+
+      component: () => import('@/views/Car/CarPay/index.vue'),
+      meta: { title: '停车缴费管理' }
     },
     {
-      path: 'enterprise',
-      meta: { title: '企业管理' },
-      component: () => import('@/views/Park/Enterprise/index.vue')
+      path: 'billing',
+      component: () => import('@/views/Car/CarRule/index.vue'),
+      meta: { title: '计费规则管理' }
     }]
   },
+  {
+    path: '/cardAdd',
+    component: () => import('@/views/Car/CarCard/add-card.vue')
+  }
   ],
 })
 
