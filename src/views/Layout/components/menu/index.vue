@@ -1,20 +1,12 @@
 <script setup lang="ts">
-import { parkUserRouterApi } from '@/api/user'
-import { useSiderbarStore } from '@/stores'
+import { useDynamicRouterStore, useSiderbarStore } from '@/stores'
 import { onMounted, ref } from 'vue'
 
 const siderbarStore = useSiderbarStore()
 
-const menuList = ref()
+const dynamicRouterStore = useDynamicRouterStore()
 
-const getMenuList = async () => {
-  const res = await parkUserRouterApi()
-  menuList.value = res.data
-}
-
-onMounted(() => {
-  getMenuList()
-})
+onMounted(() => {})
 </script>
 
 <template>
@@ -35,21 +27,25 @@ onMounted(() => {
         :collapse="!siderbarStore.isShowSiderbar"
         :router="true"
       >
-        <template v-for="(item, index) in menuList" :key="index">
-          <el-sub-menu :index="item.component" v-if="item.children && item.children.length > 0">
+        <template v-for="(item, index) in dynamicRouterStore.curRouter" :key="index">
+          <el-sub-menu :index="item.path" v-if="item.children && item.children.length > 0">
             <template #title>
-              <el-icon> <img :src="item.icon" alt="" /> </el-icon>
-              <span>{{ item.title }}</span>
+              <el-icon> <img :src="item.meta.icon" alt="" /> </el-icon>
+              <span>{{ item.meta.title }}</span>
             </template>
 
-            <el-menu-item :index="v.component" v-for="(v, u) in item.children" :key="u">
-              {{ v.title }}
+            <el-menu-item
+              :index="item.path + '/' + v.path"
+              v-for="(v, u) in item.children"
+              :key="u"
+            >
+              {{ v.meta.title }}
             </el-menu-item>
           </el-sub-menu>
 
-          <el-menu-item :index="item.component" v-else>
+          <el-menu-item :index="item.path" v-else>
             <el-icon> <img :src="item.icon" alt="" /> </el-icon>
-            <span>{{ item.title }}</span>
+            <span>{{ item.meta.title }}</span>
           </el-menu-item>
         </template>
       </el-menu>

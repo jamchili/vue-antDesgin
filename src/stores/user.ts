@@ -1,4 +1,4 @@
-import { loginApi } from "@/api/user"
+import { loginApi, parkUserProfileApi } from "@/api/user"
 import type { loginReq, loginRes } from "@/types/user"
 import { defineStore } from "pinia"
 import { computed, ref } from "vue"
@@ -11,6 +11,17 @@ export const useUserStore = defineStore('user', () => {
   const userInfo = ref<loginRes>({
     token: ''
   })
+
+
+  const userProfile = ref()
+
+
+  //获取用户信息
+  const getUserProfile = async () => {
+    const res = await parkUserProfileApi()
+    userProfile.value = res.data
+    return res.data
+  }
 
 
 
@@ -42,8 +53,12 @@ export const useUserStore = defineStore('user', () => {
     setUserInfo,
     clearUserInfo,
     isLoggedIn,
-    getToken
+    getToken,
+    getUserProfile,
+    userProfile
   }
 }, {
-  persist: true
+  persist: {
+    pick: ['userInfo']
+  },
 })

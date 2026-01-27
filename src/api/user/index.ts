@@ -11,3 +11,8 @@ export const parkUserRouterApi = () => {
   return request('/park/user/router')
 }
 
+
+export const parkUserProfileApi = () => {
+  return request('/park/user/profile')
+}
+
