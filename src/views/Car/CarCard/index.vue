@@ -7,13 +7,13 @@ import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const loading = ref(true)
+const loading = ref(false)
 const formInline = ref<Partial<getCardListReq>>({
   carNumber: '',
   personName: '',
   cardStatus: '',
   page: 1,
-  pageSize: 5
+  pageSize: 3
 })
 
 const carData = ref<getCardListRes>()
@@ -25,7 +25,6 @@ const onSubmit = () => {
 const getList = async () => {
   const res = await getCardListAPI(formInline.value)
   carData.value = res.data
-  loading.value = false
 }
 
 const formatStatus = (row: getCardListResRow) => {
@@ -140,29 +139,6 @@ onMounted(() => {
       />
     </div>
     <!-- 添加楼宇 -->
-    <el-dialog title="添加楼宇" width="580px">
-      <!-- 表单接口 -->
-      <div class="form-container">
-        <!-- <el-form ref="addForm" :model="addForm" :rules="addFormRules">
-          <el-form-item label="楼宇名称" prop="name">
-            <el-input v-model="addForm.name" />
-          </el-form-item>
-          <el-form-item label="楼宇层数" prop="floors">
-            <el-input v-model="addForm.floors" />
-          </el-form-item>
-          <el-form-item label="在管面积" prop="area">
-            <el-input v-model="addForm.area" />
-          </el-form-item>
-          <el-form-item label="物业费" prop="propertyFeePrice">
-            <el-input v-model="addForm.propertyFeePrice" />
-          </el-form-item>
-        </el-form> -->
-      </div>
-      <template #footer>
-        <el-button size="mini">取 消</el-button>
-        <el-button size="mini" type="primary">确 定</el-button>
-      </template>
-    </el-dialog>
   </div>
 </template>
 

@@ -4,11 +4,11 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
-console.log(route.matched)
-
 const breadCrumbList = ref()
 
 const initBreadCrumblist = () => {
+  console.log('---', route.matched)
+
   breadCrumbList.value = route.matched
 }
 

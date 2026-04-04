@@ -3,7 +3,11 @@ import { useDynamicRouterStore, useUserStore } from "@/stores";
 import router from ".";
 import { asyncRoutes } from "./asyncRoutes";
 const WHITLE_LIST = ['/login', '/404']
+import nprogress from 'nprogress'
+import 'nprogress/nprogress.css'
 
+// 配置关闭右上角的螺旋加载圈
+nprogress.configure({ showSpinner: false })
 
 const setRouterPerms = (val) => {
   const permissionRes = {
@@ -50,7 +54,7 @@ const combineRoutes = (val) => {
 
 
 router.beforeEach(async (to, from, next) => {
-
+  nprogress.start() // 开始进度条
   const userStore = useUserStore()
 
   const dynamicRouterStore = useDynamicRouterStore()
@@ -63,7 +67,6 @@ router.beforeEach(async (to, from, next) => {
       // 获取用户信息
       if (!userStore?.userProfile?.id) {
         const permission = await userStore.getUserProfile()
-        console.log('22', permission);
         const res = setRouterPerms(permission.permissions)
         const finalRoutes = combineRoutes(res)
         finalRoutes.forEach(i => router.addRoute(i))
@@ -82,4 +85,8 @@ router.beforeEach(async (to, from, next) => {
       next('/login')
     }
   }
+})
+
+router.afterEach(() => {
+  nprogress.done() // 结束进度条
 })

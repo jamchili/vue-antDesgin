@@ -17,7 +17,7 @@ const siderbarStore = useSiderbarStore()
       ></CpIcon>
       <div><Breadcrumb></Breadcrumb></div>
     </div>
-    <div class="lg:block hidden">promotion managementpromotion</div>
+    <div>promotion managementpromotion</div>
   </div>
   <!-- tag栏 -->
 </template>

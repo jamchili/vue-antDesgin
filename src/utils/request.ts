@@ -2,6 +2,10 @@ import { useUserStore } from '@/stores'
 import type { ApiRes } from '@/types/user'
 import { ElMessage } from 'element-plus'
 import axios, { type Method } from 'axios'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
 
 const instance = axios.create({
   baseURL: ' https://api-hmzs.itheima.net/v1',
@@ -21,10 +25,18 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (res) => {
+
     // TODO 4. 摘取核心响应数据
     return res.data
   },
   (err) => {
+    if (err.status === 401) {
+      const userStore = useUserStore()
+      userStore.clearUserInfo()
+      router.push('/login')
+
+    }
+
     ElMessage.error(err.response?.data?.msg)
     return Promise.reject(err)
   }
